@@ -5,11 +5,11 @@ namespace w13_Quiz.Entities
     public class Card
     {
         
-        public string CardNumber { get; set; }
+        public string CardNumber { get; private set; }
         public string HolderName { get; set; }
-        public float Balance { get; set; }
-        public bool IsActive { get; set; } = true;
-        public string Password { get; set; }
+        public decimal Balance { get; private set; }
+        public bool IsActive { get; private set; } = true;
+        public string Password { get; private set; }
 
         public ICollection<Transaction> SentTransactions { get; set; }
             = [];
@@ -25,7 +25,7 @@ namespace w13_Quiz.Entities
             string cardNumber,
             string holderName,
             string password,
-            float balance)
+            decimal balance)
         {
             ValidateCardNumber(cardNumber);
             ValidateHolderName(holderName);
@@ -69,7 +69,7 @@ namespace w13_Quiz.Entities
             }
         }
 
-        private void ValidateBalance(float balance)
+        private void ValidateBalance(decimal balance)
         {
             if (balance < 0)
             {
@@ -77,5 +77,34 @@ namespace w13_Quiz.Entities
                     "Balance cannot be negative.");
             }
         }
+
+        public void DecreaseBalance(decimal amount)
+        {
+            Balance -= amount;
+        }
+
+        public void IncreaseBalance(decimal amount)
+        {
+            Balance += amount;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
+        }
+
+        public void UpdateBalance(decimal balance)
+        {
+            ValidateBalance(balance);
+                
+            Balance = balance;
+        }
+
+        public void UpdateActiveStatus(bool isActive)
+        {
+            IsActive = isActive;
+        }
+
+
     }
 }

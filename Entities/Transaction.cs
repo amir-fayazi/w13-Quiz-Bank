@@ -30,6 +30,7 @@ namespace w13_Quiz.Entities
         {
             ValidateCardNumber(sourceCardNumber, "Source card number");
             ValidateCardNumber(destinationCardNumber, "Destination card number");
+            ValidateDifferentCards(sourceCardNumber, destinationCardNumber);
             ValidateAmount(amount);
 
             SourceCardNumber = sourceCardNumber;
@@ -55,6 +56,20 @@ namespace w13_Quiz.Entities
                 throw new ValidationException(
                     "Transaction amount must be greater than zero.");
             }
+        }
+
+        private void ValidateDifferentCards(string sourceCardNumber,string destinationCardNumber)
+        {
+            if (sourceCardNumber == destinationCardNumber)
+            {
+                throw new BusinessRuleException(
+                    "Source and destination cards cannot be the same.");
+            }
+        }
+
+        public void MarkAsSuccessful()
+        {
+            IsSuccessful = true;
         }
     }
 }
