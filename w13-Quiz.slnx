@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../Bank.Infrastructure/Bank.Infrastructure.csproj" />
   <Project Path="Bank.Domain.csproj" />
 </Solution>
