@@ -20,7 +20,7 @@ namespace Bank.Infrastructure.Data.Migrations
                     CardNumber = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false),
                     HolderName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Password = table.Column<string>(type: "varchar(4)", unicode: false, maxLength: 4, nullable: false),
                     FailedPasswordAttempts = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
@@ -98,11 +98,11 @@ namespace Bank.Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Cards",
-                columns: new[] { "CardNumber", "Balance", "FailedPasswordAttempts", "HolderName", "Password" },
+                columns: new[] { "CardNumber", "Balance", "FailedPasswordAttempts", "HolderName", "IsActive", "Password" },
                 values: new object[,]
                 {
-                    { "1000000000000009", 30000m, 3, "Blocked Source", "9999" },
-                    { "1000000000000010", 45000m, 3, "Blocked Destination", "1010" }
+                    { "1000000000000009", 30000m, 3, "Blocked Source", false, "9999" },
+                    { "1000000000000010", 45000m, 3, "Blocked Destination", false, "1010" }
                 });
 
             migrationBuilder.InsertData(

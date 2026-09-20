@@ -35,7 +35,6 @@ namespace Bank.Infrastructure.Data.Configurations
 
             builder
                 .Property(x => x.IsActive)
-                .HasDefaultValue(true)
                 .IsRequired();
 
             builder
