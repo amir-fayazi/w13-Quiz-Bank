@@ -27,6 +27,11 @@ namespace Bank.Application.Services
                 card.RegisterFailedPasswordAttempt();
                 _cardRepo.Update(card);
 
+                if(!card.IsActive)
+                    throw new BusinessRuleException(
+                     "Card has been blocked after three failed password attempts.");
+
+
                 throw new InvalidCredentialsException(
                    "Card number or password is incorrect.");
             }
