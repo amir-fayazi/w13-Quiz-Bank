@@ -1,8 +1,4 @@
-﻿using LibraryManagement.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
+﻿using Bank.Domain.Exceptions;
 using w13_Quiz.Contracts;
 using w13_Quiz.Entities;
 
@@ -25,6 +21,14 @@ namespace Bank.Application.Services
 
             var sourceCard = _cardRepo.GetByCardNumber(sourceCardNumber);
             var destinationCard = _cardRepo.GetByCardNumber(destinationCardNumber);
+
+            if (!sourceCard.IsActive )
+                throw new BusinessRuleException(
+                    "Your card is blocked.");
+
+            if (!destinationCard.IsActive)
+                throw new BusinessRuleException(
+                    "Destination card is blocked.");
 
             if (amount <= 0)
                 throw new BusinessRuleException(

@@ -1,4 +1,4 @@
-﻿using LibraryManagement.Domain.Exceptions;
+﻿using Bank.Domain.Exceptions;
 
 namespace w13_Quiz.Entities
 {

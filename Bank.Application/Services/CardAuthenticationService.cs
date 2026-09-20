@@ -1,4 +1,4 @@
-﻿using LibraryManagement.Domain.Exceptions;
+﻿using Bank.Domain.Exceptions;
 using w13_Quiz.Contracts;
 
 namespace Bank.Application.Services
@@ -7,7 +7,7 @@ namespace Bank.Application.Services
     {
 
         private readonly ICardRepository _cardRepo;
-        private readonly ITransactionRepository _transactionRepo;
+       
         public CardAuthenticationService(ICardRepository cardRepo)
         {
             _cardRepo = cardRepo;

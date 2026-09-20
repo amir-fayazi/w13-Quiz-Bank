@@ -1,6 +1,6 @@
 ﻿
 
-namespace LibraryManagement.Domain.Exceptions
+namespace Bank.Domain.Exceptions
 {
     public class DuplicateException : Exception
     {

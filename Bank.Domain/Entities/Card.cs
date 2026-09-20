@@ -1,15 +1,15 @@
-﻿using LibraryManagement.Domain.Exceptions;
+﻿using Bank.Domain.Exceptions;
 
 namespace w13_Quiz.Entities
 {
     public class Card
     {
-        
-        public string CardNumber { get; private set; }
-        public string HolderName { get; set; }
+
+        public string CardNumber { get; private set; } = null!;
+        public string HolderName { get; set; } = null!;
         public decimal Balance { get; private set; }
         public bool IsActive { get; private set; } = true;
-        public string Password { get; private set; }
+        public string Password { get; private set; } = null!;
         public int FailedPasswordAttempts { get; private set; }
 
         public ICollection<Transaction> SentTransactions { get; set; }

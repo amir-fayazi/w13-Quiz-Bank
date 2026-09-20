@@ -1,4 +1,4 @@
-﻿using LibraryManagement.Domain.Exceptions;
+﻿using Bank.Domain.Exceptions;
 using w13_Quiz.Contracts;
 using w13_Quiz.Entities;
 

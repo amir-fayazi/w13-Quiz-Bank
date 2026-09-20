@@ -1,13 +1,13 @@
 ﻿
 using Bank.Infrastructure.Data;
-using LibraryManagement.Domain.Exceptions;
+using Bank.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using w13_Quiz.Contracts;
 using w13_Quiz.Entities;
 
 namespace Bank.Infrastructure.Repositories
 {
-    internal class CardRepository : ICardRepository
+    public class CardRepository : ICardRepository
     {
         private readonly AppDbContext _context;
         public CardRepository(AppDbContext context)

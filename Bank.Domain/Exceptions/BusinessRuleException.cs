@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibraryManagement.Domain.Exceptions
+namespace Bank.Domain.Exceptions
 {
     public class BusinessRuleException : Exception
     {

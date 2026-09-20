@@ -29,7 +29,10 @@ namespace Bank.Infrastructure.Data.Configurations
                  .HasForeignKey(x => x.DestinationCardNumber)
                  .OnDelete(DeleteBehavior.NoAction);
 
-
+            builder
+                .Property(x => x.Balance)
+                .HasPrecision(18, 2);
+                
         }
     }
 }
