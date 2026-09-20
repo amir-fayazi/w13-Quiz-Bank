@@ -10,6 +10,7 @@ namespace w13_Quiz.Entities
         public decimal Balance { get; private set; }
         public bool IsActive { get; private set; } = true;
         public string Password { get; private set; }
+        public int FailedPasswordAttempts { get; private set; }
 
         public ICollection<Transaction> SentTransactions { get; set; }
             = [];
@@ -104,7 +105,18 @@ namespace w13_Quiz.Entities
         {
             IsActive = isActive;
         }
+        public void RegisterFailedPasswordAttempt()
+        {
+            FailedPasswordAttempts++;
 
+            if (FailedPasswordAttempts >= 3)
+                Deactivate();
+        }
+
+        public void ResetFailedPasswordAttempts()
+        {
+            FailedPasswordAttempts = 0;
+        }
 
     }
 }
