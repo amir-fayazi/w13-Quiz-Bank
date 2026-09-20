@@ -12,7 +12,7 @@ namespace Bank.Infrastructure.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=.;Database=Week12-Bank;Integrated Security=True;TrustServerCertificate=True;");
+                @"Server=.;Database=Week13QuizBank;Integrated Security=True;TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

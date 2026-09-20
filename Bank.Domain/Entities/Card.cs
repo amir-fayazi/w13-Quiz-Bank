@@ -6,7 +6,7 @@ namespace w13_Quiz.Entities
     {
 
         public string CardNumber { get; private set; } = null!;
-        public string HolderName { get; set; } = null!;
+        public string HolderName { get; private set; } = null!;
         public decimal Balance { get; private set; }
         public bool IsActive { get; private set; } = true;
         public string Password { get; private set; } = null!;
