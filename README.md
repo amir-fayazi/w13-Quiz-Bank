@@ -40,3 +40,6 @@ After that, migrations can be applied with:
 
 ```powershell
 Update-Database
+```
+Then `Bank.Presentation` can be selected as the startup project and the application can be run from Visual Studio.
+
