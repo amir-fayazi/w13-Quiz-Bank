@@ -50,6 +50,18 @@ namespace Bank.Infrastructure.Repositories
                 })];
         }
 
-        
+        public decimal GetTodayTransferredAmount(string cardNumber)
+        {
+            var today = DateTime.UtcNow.Date;
+            var tomorrow = today.AddDays(1);
+
+            return _context.Transactions
+                .Where(x =>
+                    x.SourceCardNumber == cardNumber &&
+                    x.IsSuccessful &&
+                    x.TransactionDate >= today &&
+                    x.TransactionDate < tomorrow)
+                .Sum(x => (decimal?)x.Amount) ?? 0m;
+        }
     }
 }

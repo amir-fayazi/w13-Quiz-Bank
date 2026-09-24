@@ -14,8 +14,8 @@ namespace w13_Quiz.Entities
 
         public decimal Amount { get; private set; }
 
-        public DateTime TransactionDate { get; private set; }
-            = DateTime.UtcNow;
+        public DateTime TransactionDate { get; private set; }= DateTime.UtcNow;
+            
 
         public bool IsSuccessful { get; private set; }
 
@@ -70,6 +70,10 @@ namespace w13_Quiz.Entities
         public void MarkAsSuccessful()
         {
             IsSuccessful = true;
+        }
+        public void MarkAsFailed()
+        {
+            IsSuccessful = false;
         }
     }
 }

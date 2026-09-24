@@ -46,5 +46,19 @@ namespace Bank.Infrastructure.Repositories
 
             _context.SaveChanges();
         }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+
+        public decimal GetDailyWithrow(string cardNumber)
+        {
+            return _context.Cards
+                .Where(x => x.CardNumber == cardNumber)
+                .SelectMany(x => x.SentTransactions)
+                .Where(t => t.IsSuccessful && t.TransactionDate.Date == DateTime.Today)
+                .Sum(t => t.Amount);
+        }
     }
 }
