@@ -37,16 +37,6 @@ namespace Bank.Infrastructure.Repositories
             return card;
         }
 
-        public void Update(Card updatedCard)
-        {
-            var card = GetByCardNumber(updatedCard.CardNumber);
-
-            card.UpdateBalance(updatedCard.Balance);
-            card.UpdateActiveStatus(updatedCard.IsActive);
-
-            _context.SaveChanges();
-        }
-
         public void SaveChanges()
         {
             _context.SaveChanges();

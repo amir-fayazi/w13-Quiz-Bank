@@ -11,8 +11,7 @@ namespace w13_Quiz.Contracts
 
         void Add(Card card);
 
-        void Update(Card card);
-
+      
         void SaveChanges();
     }
 }
