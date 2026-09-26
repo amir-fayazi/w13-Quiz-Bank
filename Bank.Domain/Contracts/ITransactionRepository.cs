@@ -10,5 +10,6 @@ namespace w13_Quiz.Contracts
 
         Transaction Add(Transaction transaction);
 
+        decimal GetTodayTransferredAmount(string cardNumber);
     }
 }

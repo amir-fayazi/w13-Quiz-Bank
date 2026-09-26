@@ -25,9 +25,9 @@ namespace Bank.Application.Services
             if (card.Password != password)
             {
                 card.RegisterFailedPasswordAttempt();
-                _cardRepo.Update(card);
+                _cardRepo.SaveChanges();
 
-                if(!card.IsActive)
+                if (!card.IsActive)
                     throw new BusinessRuleException(
                      "Card has been blocked after three failed password attempts.");
 
@@ -38,7 +38,8 @@ namespace Bank.Application.Services
 
             card.ResetFailedPasswordAttempts();
 
-            _cardRepo.Update(card);
+            _cardRepo.SaveChanges();
         }
     }
 }
+

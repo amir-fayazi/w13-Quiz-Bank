@@ -37,14 +37,18 @@ namespace Bank.Infrastructure.Repositories
             return card;
         }
 
-        public void Update(Card updatedCard)
+        public void SaveChanges()
         {
-            var card = GetByCardNumber(updatedCard.CardNumber);
-
-            card.UpdateBalance(updatedCard.Balance);
-            card.UpdateActiveStatus(updatedCard.IsActive);
-
             _context.SaveChanges();
+        }
+
+        public decimal GetDailyWithrow(string cardNumber)
+        {
+            return _context.Cards
+                .Where(x => x.CardNumber == cardNumber)
+                .SelectMany(x => x.SentTransactions)
+                .Where(t => t.IsSuccessful && t.TransactionDate.Date == DateTime.Today)
+                .Sum(t => t.Amount);
         }
     }
 }

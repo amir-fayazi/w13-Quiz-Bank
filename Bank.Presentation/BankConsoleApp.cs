@@ -76,7 +76,7 @@ public class BankConsoleApp
             Console.WriteLine();
 
             var sourceCardNumber =
-                ConsoleUi.ReadOrBack("Source card number");
+                ConsoleUi.ReadCardNumberOrBack("Source card number");
 
             if (sourceCardNumber is null)
                 return;
@@ -85,13 +85,13 @@ public class BankConsoleApp
                 return;
 
             var destinationCardNumber =
-                ConsoleUi.ReadOrBack("Destination card number");
+                ConsoleUi.ReadCardNumberOrBack("Destination card number");
 
             if (destinationCardNumber is null)
                 return;
 
             var amount =
-                ConsoleUi.ReadDecimalOrBack("Amount");
+                ConsoleUi.ReadPositiveAmountOrBack("Amount");
 
             if (amount is null)
                 return;
@@ -139,7 +139,7 @@ public class BankConsoleApp
             Console.WriteLine();
 
             var password =
-                ConsoleUi.ReadOrBack("Password");
+                ConsoleUi.ReadPasswordOrBack("Password");
 
             if (password is null)
                 return false;
@@ -189,19 +189,19 @@ public class BankConsoleApp
             Console.WriteLine();
 
             var cardNumber =
-                ConsoleUi.ReadOrBack("Card number");
+                ConsoleUi.ReadCardNumberOrBack("Card number");
 
             if (cardNumber is null)
                 return;
 
             var holderName =
-                ConsoleUi.ReadOrBack("Holder name");
+                ConsoleUi.ReadRequiredTextOrBack("Holder name");
 
             if (holderName is null)
                 return;
 
             var password =
-                ConsoleUi.ReadOrBack("Password");
+                ConsoleUi.ReadPasswordOrBack("Password");
 
             if (password is null)
                 return;
@@ -250,7 +250,7 @@ public class BankConsoleApp
             Console.WriteLine();
 
             var cardNumber =
-                ConsoleUi.ReadOrBack("Card number");
+                ConsoleUi.ReadCardNumberOrBack("Card number");
 
             if (cardNumber is null)
                 return;
@@ -299,7 +299,7 @@ public class BankConsoleApp
             Console.WriteLine();
 
             var cardNumber =
-                ConsoleUi.ReadOrBack("Card number");
+                ConsoleUi.ReadCardNumberOrBack("Card number");
 
             if (cardNumber is null)
                 return;

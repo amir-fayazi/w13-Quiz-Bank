@@ -34,15 +34,6 @@ public class CardService : ICardService
         _cardRepo.Add(card);
     }
 
-    public void DeactivateCard(string cardNumber)
-    {
-        var card = _cardRepo.GetByCardNumber(cardNumber);
-
-        card.Deactivate();
-
-        _cardRepo.Update(card);
-    }
-
     public IEnumerable<ReceivedTransactionDto> GetCardReceivedTransactions(string cardNumber)
 
     {
