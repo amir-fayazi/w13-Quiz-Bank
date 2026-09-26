@@ -119,5 +119,11 @@ namespace w13_Quiz.Entities
         }
 
 
+        public void ChangePassword(string newPassword)
+        {
+            ValidatePassword(newPassword);
+            Password = newPassword;
+        }
+
     }
 }

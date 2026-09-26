@@ -1,4 +1,5 @@
 ﻿
+using w13_Quiz.DTOs;
 using w13_Quiz.Entities;
 
 namespace w13_Quiz.Contracts
@@ -13,5 +14,10 @@ namespace w13_Quiz.Contracts
 
       
         void SaveChanges();
+
+        CardDataDto GetCardData(string cardNumber);
+        void ChangePassword(    string cardNumber,string newPassword);
+    
+
     }
 }

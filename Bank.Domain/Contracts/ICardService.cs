@@ -9,6 +9,9 @@ namespace w13_Quiz.Contracts
 
         IEnumerable<ReceivedTransactionDto> GetCardReceivedTransactions(string cardNumber);
         IEnumerable<SentTransactionDto> GetCardSentTransactions(string cardNumber);
-
+        void ChangeCardPassword(string cardNumber, string currentPassword, string newPassword);
+    
+    
+   
     }
 }

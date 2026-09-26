@@ -55,4 +55,47 @@ public class CardService : ICardService
         return _transactionRepo
             .GetSentTransactions(cardNumber);
     }
+
+
+    public void ChangeCardPassword(
+    string cardNumber,
+    string currentPassword,
+    string newPassword)
+    {
+        var card = _cardRepo.GetCardData(cardNumber);
+        
+        if (!card.IsActive)
+        {
+            throw new BusinessRuleException(
+                "This card is blocked.");
+        }
+
+        if (card.Password != currentPassword)
+        {
+            throw new InvalidCredentialsException(
+                "Current password is incorrect.");
+        }
+
+        if (currentPassword == newPassword)
+        {
+            throw new BusinessRuleException(
+                "New password must be different from the current password.");
+        }
+
+        ValidatePassword(newPassword);
+
+        _cardRepo.ChangePassword(cardNumber, newPassword);
+    }
+    private void ValidatePassword(string password)
+    {
+        if (string.IsNullOrWhiteSpace(password) ||
+            password.Length != 4 ||
+            !password.All(char.IsDigit))
+        {
+            throw new ValidationException(
+                "Password must be exactly 4 digits.");
+        }
+    }
 }
+
+    
