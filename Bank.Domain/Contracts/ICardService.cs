@@ -2,7 +2,7 @@
 
 namespace w13_Quiz.Contracts
 {
-    public interface 
+    public interface ICardService
 
     {
         void CreateCard(string cardNumber,  string holderName,  string password, decimal balance);
