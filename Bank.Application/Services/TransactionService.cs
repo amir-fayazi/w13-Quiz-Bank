@@ -9,7 +9,10 @@ namespace Bank.Application.Services
     {
         private readonly ICardRepository _cardRepo;
         private readonly ITransactionRepository _transactionRepo;
-        private const decimal DailyTransferLimit = 2_000m;
+        private const decimal DailyTransferLimit = 20_000m;
+        private const decimal HighFeeRate = 1.5m;
+        private const decimal LowFeeRate = 0.5m;
+        private const decimal FeeThreshold = 10_000m;
 
         public TransactionService(
             ICardRepository cardRepo,
@@ -57,14 +60,9 @@ namespace Bank.Application.Services
                         "Source card does not have enough balance.");
                 }
 
-                EnsureDailyTransferLimit(
-                    sourceCardNumber,
-                    amount);
-
-                TransferBalance(
-                    sourceCard,
-                    destinationCard,
-                    amount);
+                EnsureDailyTransferLimit(sourceCardNumber,amount);
+                    
+                TransferBalance(sourceCard, destinationCard, amount);
 
                 transaction.MarkAsSuccessful();
 
@@ -82,10 +80,20 @@ namespace Bank.Application.Services
 
         private void TransferBalance(Card sourceCard, Card destinationCard, decimal amount)
         {
-            sourceCard.DecreaseBalance(amount);
+
+            var fee = CalculateTransferFee(amount);
+
+            sourceCard.DecreaseBalance(amount + fee);
+
             destinationCard.IncreaseBalance(amount);
         }
 
+        private decimal CalculateTransferFee(decimal amount)
+        {
+            var feeRate = amount < FeeThreshold? LowFeeRate : HighFeeRate;
+
+            return amount * feeRate / 100;
+        }
         private void EnsureDailyTransferLimit(string sourceCardNumber, decimal amount)
 
         {
@@ -97,6 +105,17 @@ namespace Bank.Application.Services
                 throw new BusinessRuleException(
                     "Daily transfer limit exceeded.");
             }
+        }
+
+
+        public string? GetHolderNameByCardNumber(string cardNumber)
+        {
+            var holderName = _cardRepo.GetHolderNameByCardNumber(cardNumber);
+
+            if (holderName is null)
+                throw new NotFoundException("Destination card not found.");
+
+            return holderName;
         }
     }
 }

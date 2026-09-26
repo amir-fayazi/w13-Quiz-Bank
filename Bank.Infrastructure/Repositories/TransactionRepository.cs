@@ -63,5 +63,8 @@ namespace Bank.Infrastructure.Repositories
                     x.TransactionDate < tomorrow)
                 .Sum(x => (decimal?)x.Amount) ?? 0m;
         }
+
+
+
     }
 }

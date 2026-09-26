@@ -89,5 +89,13 @@ namespace Bank.Infrastructure.Repositories
                     $"Card with number {cardNumber} was not found.");
             }
         }
+
+        public string? GetHolderNameByCardNumber(string cardNumber)
+        {
+            return _context.Cards
+                .Where(x => x.CardNumber == cardNumber)
+                .Select(x => x.HolderName)
+                .FirstOrDefault();
+        }
     }
 }

@@ -17,7 +17,8 @@ namespace w13_Quiz.Contracts
 
         CardDataDto GetCardData(string cardNumber);
         void ChangePassword(    string cardNumber,string newPassword);
-    
 
+
+        string? GetHolderNameByCardNumber(string cardNumber);
     }
 }
