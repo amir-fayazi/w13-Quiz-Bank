@@ -8,5 +8,8 @@ namespace w13_Quiz.Contracts
         void Transfer(string sourseCardNumber, string destinationCardNumber, decimal amount);
 
         string? GetHolderNameByCardNumber(string cardNumber);
+
+        Guid GenerateVerificationCode();
+        void VerificationCode(Guid id, string code);
     }
 }

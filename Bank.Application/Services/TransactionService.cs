@@ -1,5 +1,6 @@
 ﻿using Bank.Domain.Exceptions;
 using w13_Quiz.Contracts;
+using w13_Quiz.DTOs;
 using w13_Quiz.Entities;
 
 namespace Bank.Application.Services
@@ -9,6 +10,7 @@ namespace Bank.Application.Services
     {
         private readonly ICardRepository _cardRepo;
         private readonly ITransactionRepository _transactionRepo;
+        private readonly IVerificationCodeRepository _verificationCodeRepository;
         private const decimal DailyTransferLimit = 20_000m;
         private const decimal HighFeeRate = 1.5m;
         private const decimal LowFeeRate = 0.5m;
@@ -16,10 +18,12 @@ namespace Bank.Application.Services
 
         public TransactionService(
             ICardRepository cardRepo,
-            ITransactionRepository transactionRepo)
+            ITransactionRepository transactionRepo,
+            IVerificationCodeRepository verificationCodeRepository)
         {
             _cardRepo = cardRepo;
             _transactionRepo = transactionRepo;
+            _verificationCodeRepository = verificationCodeRepository;
         }
         public void Transfer(string sourceCardNumber, string destinationCardNumber, decimal amount)
         {
@@ -60,8 +64,8 @@ namespace Bank.Application.Services
                         "Source card does not have enough balance.");
                 }
 
-                EnsureDailyTransferLimit(sourceCardNumber,amount);
-                    
+                EnsureDailyTransferLimit(sourceCardNumber, amount);
+
                 TransferBalance(sourceCard, destinationCard, amount);
 
                 transaction.MarkAsSuccessful();
@@ -90,7 +94,7 @@ namespace Bank.Application.Services
 
         private decimal CalculateTransferFee(decimal amount)
         {
-            var feeRate = amount < FeeThreshold? LowFeeRate : HighFeeRate;
+            var feeRate = amount < FeeThreshold ? LowFeeRate : HighFeeRate;
 
             return amount * feeRate / 100;
         }
@@ -117,5 +121,35 @@ namespace Bank.Application.Services
 
             return holderName;
         }
+
+
+        public Guid GenerateVerificationCode()
+        {
+
+            var code = VerificationCodeGenerator.Generate();
+
+            var verificationCode = new VerificationCode(code);
+
+            _verificationCodeRepository.Save(verificationCode);
+
+            return verificationCode.Id;
+        }
+
+        public void VerificationCode(Guid id, string code)
+        {
+            var verificationCode = _verificationCodeRepository.GetById(id);
+
+            if (verificationCode is null)
+                throw new NotFoundException("Verification code not found.");
+
+            if (verificationCode.Code != code)
+                throw new BusinessRuleException("Verification code is incorrect.");
+
+            if (DateTime.UtcNow - verificationCode.CreatedAt >= TimeSpan.FromMinutes(5))
+                throw new BusinessRuleException("Verification code has expired.");
+           
+        }
+
+
     }
 }
