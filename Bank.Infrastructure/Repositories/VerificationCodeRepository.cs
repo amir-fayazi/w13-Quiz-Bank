@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using w13_Quiz.Contracts;
-using w13_Quiz.DTOs;
 using w13_Quiz.Entities;
 
 namespace Bank.Infrastructure.Repositories

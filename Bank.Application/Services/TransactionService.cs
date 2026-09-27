@@ -1,6 +1,5 @@
 ﻿using Bank.Domain.Exceptions;
 using w13_Quiz.Contracts;
-using w13_Quiz.DTOs;
 using w13_Quiz.Entities;
 
 namespace Bank.Application.Services
@@ -58,7 +57,9 @@ namespace Bank.Application.Services
                         "Destination card is blocked.");
                 }
 
-                if (sourceCard.Balance < amount)
+                var fee = CalculateTransferFee(amount);
+
+                if (sourceCard.Balance < amount + fee)
                 {
                     throw new BusinessRuleException(
                         "Source card does not have enough balance.");
@@ -66,11 +67,13 @@ namespace Bank.Application.Services
 
                 EnsureDailyTransferLimit(sourceCardNumber, amount);
 
-                TransferBalance(sourceCard, destinationCard, amount);
+                TransferBalance(sourceCard, destinationCard, amount, fee);
 
                 transaction.MarkAsSuccessful();
 
                 _transactionRepo.Add(transaction);
+
+                _cardRepo.SaveChanges();
             }
             catch (BusinessRuleException)
             {
@@ -78,15 +81,14 @@ namespace Bank.Application.Services
 
                 _transactionRepo.Add(transaction);
 
+                _cardRepo.SaveChanges();
+
                 throw;
             }
         }
 
-        private void TransferBalance(Card sourceCard, Card destinationCard, decimal amount)
+        private void TransferBalance(Card sourceCard, Card destinationCard, decimal amount, decimal fee)
         {
-
-            var fee = CalculateTransferFee(amount);
-
             sourceCard.DecreaseBalance(amount + fee);
 
             destinationCard.IncreaseBalance(amount);
@@ -111,7 +113,6 @@ namespace Bank.Application.Services
             }
         }
 
-
         public string? GetHolderNameByCardNumber(string cardNumber)
         {
             var holderName = _cardRepo.GetHolderNameByCardNumber(cardNumber);
@@ -121,7 +122,6 @@ namespace Bank.Application.Services
 
             return holderName;
         }
-
 
         public Guid GenerateVerificationCode()
         {

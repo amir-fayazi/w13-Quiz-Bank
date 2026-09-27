@@ -13,11 +13,9 @@ namespace Bank.Infrastructure.Repositories
             _context = context;
         }
 
-        public Transaction Add(Transaction transaction)
+        public void Add(Transaction transaction)
         {
             _context.Transactions.Add(transaction);
-            _context.SaveChanges();
-            return transaction;
         }
 
         public IEnumerable<ReceivedTransactionDto> GetReceivedTransactions(string cardNumber)
