@@ -31,42 +31,8 @@ var app = new BankConsoleApp(
     transactionService,
     authenticationService);
 
-//app.Run();
+app.Run();
 
-
-Console.WriteLine("source card: ");
-var sCard = Console.ReadLine();
-
-Console.WriteLine("password");
-var password = Console.ReadLine();
-
-Console.WriteLine("des card: ");
-var dCard = Console.ReadLine();
-
-try
-{
-    string name = transactionService.GetHolderNameByCardNumber(dCard);
-    Console.WriteLine(name);
-    Console.WriteLine("Mikhay edame bedi(0/1): ");
-    var userChoice = Console.ReadLine();
-    if (userChoice == "0")
-        return;
-    var id = transactionService.GenerateVerificationCode();
-
-    Console.WriteLine("Enter verify code: ");
-    var userCode = Console.ReadLine();
-
-    transactionService.VerificationCode(id, userCode);
-
-    transactionService.Transfer(sCard, dCard, 2000);
-
-    Console.WriteLine("trasfer success");
-}
-catch (Exception)
-{
-
-    throw;
-}
 
 
 static string FindProjectRoot()
